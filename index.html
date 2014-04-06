@@ -1,0 +1,174 @@
+<html>
+
+<head>
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
+<script src="jquery.flot.resize.min.js"></script>
+<script src="timer.js"></script>
+
+<!--   
+  	<link href="../examples.css" rel="stylesheet" type="text/css">   
+	[if lte IE 8]><script language="javascript" type="text/javascript" src="../../excanvas.min.js"></script><![endif
+ 	<script language="javascript" type="text/javascript" src="jquery.js"></script>   
+	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>     
+	-->
+
+	
+	
+	
+	
+	
+	<script>
+var data = [];
+var dataset;
+var totalPoints = 100;
+var updateInterval = 1000;
+var now = new Date().getTime();
+
+
+function GetData() {
+    data.shift();
+
+    while (data.length < totalPoints) {     
+        var y = Math.random() * 100;
+        var temp = [now += updateInterval, y];
+
+        data.push(temp);
+    }
+}
+
+var options = {
+    series: {
+        lines: {
+            show: true,
+            lineWidth: 1.2,
+            fill: true
+        }
+    },
+    xaxis: {
+        mode: "time",
+        tickSize: [2, "second"],
+        tickFormatter: function (v, axis) {
+            var date = new Date(v);
+
+            if (date.getSeconds() % 20 == 0) {
+                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                return hours + ":" + minutes + ":" + seconds;
+            } else {
+                return "";
+            }
+        },
+        axisLabel: "Time",
+        axisLabelUseCanvas: true,
+        axisLabelFontSizePixels: 12,
+        axisLabelFontFamily: 'Verdana, Arial',
+        axisLabelPadding: 10
+    },
+    yaxis: {
+        min: 0,
+        max: 100,        
+        tickSize: 5,
+        tickFormatter: function (v, axis) {
+            if (v % 10 == 0) {
+                return v + "%";
+            } else {
+                return "";
+            }
+        },
+        axisLabel: "CPU loading",
+        axisLabelUseCanvas: true,
+        axisLabelFontSizePixels: 12,
+        axisLabelFontFamily: 'Verdana, Arial',
+        axisLabelPadding: 6
+    },
+    legend: {        
+        labelBoxBorderColor: "#fff"
+    },
+    grid: {                
+        backgroundColor: "#000000",
+        tickColor: "#008040"
+    }
+};
+
+
+
+
+
+</script>
+	
+	
+	
+	
+	
+	
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+
+<div id="dashboard"> 
+	<div id="dash-HLT">	</div> 
+	<div id="dash-MLT">	</div> 
+	<div id="dash-BK">	</div> 
+	<div id="clock">	</div> 
+	</div>
+	
+<div id="contentZone">	
+	
+<div id="lnav"> <div id="buttons"> 
+	<input type="button" onclick="showConfig()" value="Show Config">
+	<button type="button" onclick="showHLT()"> Show HLT </button>
+	<input type="button" onclick="showMLT()" value="Show MLT">
+	<input type="button" onclick="showBK()" value="Show BK">
+	<p>	</p>
+	<button type="button" onclick="postFunc17();">Post Function 1 to p17</button>
+		<p>	</p>
+	<button type="button" onclick="getFunc17();">Get p17 function</button> 
+	<button type="button" onclick="getValue17();">Get p17 value</button>
+		<p>	</p>
+	<button type="button" onclick="postValue17();">post p17 value = 1</button>
+	<button type="button" onclick="postValue170();">post p17 value = 0</button>
+		<p>	</p>
+	<button type="button" onclick="read17();">Read 17</button>
+
+</div>	</div>
+
+<div id="configDiv">
+	<div id="configContent">
+HLT Heating Element Relay (positive) RasPi pin number: <input type="number" name="quantity" min="1" max="26">
+<br>
+BK Heating Element Relay (positive ) RasPi pin number : <input type="number" name="quantity" min="1" max="26">
+</div>
+</div>
+
+<div id="hltDiv">	
+
+<!-- HTML -->
+<div id="flot-placeholder1"></div>
+
+<div id="controlsHLT"></div>
+</div>
+
+
+<div id="mltDiv">
+<div id="flot">.</div>
+<div id="Status"></div>
+</div>
+
+<div id="bkDiv">
+<div id="tempBK"></div>
+<div id="controlsBK"></div>
+</div> 
+
+</div>
+
+<div id="footer"> </div>
+
+</body>
+</html>
